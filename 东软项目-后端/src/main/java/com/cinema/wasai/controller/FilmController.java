@@ -29,7 +29,7 @@ public class FilmController {
         return filmService.selectAllFilms();
 
     }
-
+    //查询热门榜单
     @GetMapping("/hot/limit")
     public List<Film> getHotRank() {
         log.info("FilmController->getHotRank()");

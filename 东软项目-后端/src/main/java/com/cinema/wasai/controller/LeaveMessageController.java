@@ -3,6 +3,7 @@ package com.cinema.wasai.controller;
 import com.cinema.wasai.model.entiy.LeavingMessage;
 import com.cinema.wasai.model.entiy.User;
 import com.cinema.wasai.model.entiy.WorkerEvaluate;
+import com.cinema.wasai.model.vo.LeaveMsgReplyVo;
 import com.cinema.wasai.model.vo.LeaveMsgVo;
 import com.cinema.wasai.model.vo.WorkerEvaVO;
 import com.cinema.wasai.service.LeavingMessageService;
@@ -11,10 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/lm")
@@ -57,5 +55,15 @@ public class LeaveMessageController {
             map.put("success","fail");
             return map;
         }
+    }
+    @PutMapping("")
+    public int AddReply(@RequestBody LeaveMsgReplyVo vo)
+    {
+        LeavingMessage lm=new LeavingMessage();
+        lm.setId(vo.getId());
+        lm.setUpdateTime(new Date());
+        lm.setReply(vo.getReply());
+        int value=leavingMessageService.updateByPrimaryKeySelective(lm);
+        return value;
     }
 }
