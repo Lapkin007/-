@@ -4,11 +4,7 @@
     <div class="post">
       <el-carousel height="500px" width="1500px">
         <el-carousel-item v-for="(item, index) in posterList" :key="index">
-          <el-image
-            :src="item.url"
-            alt=""
-            style="width: 1500px; height: 500px"
-          ></el-image>
+          <el-image :src="item.url" alt="" style="width: 1500px; height: 500px"></el-image>
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -19,24 +15,12 @@
       <el-main>
         <h2 class="sidetitle">热门电影</h2>
         <br />
-        <el-col
-          :span="5"
-          v-for="(item, index) in movie_area"
-          :key="index"
-          :offset="1"
-          style="margin-top: 20px"
-        >
+        
+        <el-col :span="5" v-for="(item, index) in movie_area" :key="index" :offset="1" style="margin-top: 20px">
           <div @click="Movie_card_click(item)">
-            <el-card
-              :body-style="{ padding: '13px 0px' }"
-              style="margin-bottom: 30px; height: 330px"
-            >
-              <img
-                :src="item.cover"
-                style="width: 170px; height: 250px"
-                alt="ERROR"
-                title=""
-              />
+          <el-link :underline="false">
+            <el-card :body-style="{ padding: '13px 0px' }" style="margin-bottom: 30px; height: 330px">
+              <img :src="item.cover" style="width: 170px; height: 250px" alt="ERROR" title="" />
               <div style="padding: 5px">
                 <span class="showTagName">{{ item.name }}</span>
                 <div class="movie_info">
@@ -47,76 +31,49 @@
                 </div>
               </div>
             </el-card>
+            </el-link>
           </div>
         </el-col>
+        
       </el-main>
       <!-- 左侧电影区结束 -->
       <!-- 右侧排行区 -->
-      <el-aside
-        ><span class="hot_title">热门榜单TOP10</span>
+      <el-aside><span class="hot_title">热门榜单TOP10</span>
         <div class="top1" style="margin-top: 30px">
+          <el-link :underline="false">
           <div @click="Movie_card_click(hot[0])">
             <div class="top_rank_num">1</div>
-            <img
-              width="120"
-              :src="hot[0].cover"
-              alt="ERROR"
-              style="float: left"
-            />
-            <span class="top1_text1">{{ hot[0].name }}</span
-            ><br />
-            <span class="top1_text2">上映时间:{{ hot[0].releaseTime }}</span
-            ><br />
-            <span class="top1_text3">热度值:{{ hot[0].hot }}</span
-            ><br />
+            <img width="120" :src="hot[0].cover" alt="ERROR" style="float: left" />
+            <span class="top1_text1">{{ hot[0].name }}</span><br />
+            <span class="top1_text2">上映时间:{{ hot[0].releaseTime }}</span><br />
+            <span class="top1_text3">热度值:{{ hot[0].hot }}</span><br />
           </div>
+          </el-link>
         </div>
 
         <div class="top2" style="margin-left: -50px">
+        
           <div @click="Movie_card_click(hot[1])">
             <div class="top_rank_num">2</div>
-            <img
-              width="150"
-              height="180"
-              :src="hot[1].cover"
-              alt="ERROR"
-              style="float: left"
-            />
-            <span class="top2_text1">{{ hot[1].name }}</span
-            ><br />
-            <span class="top2_text2">热度值:{{ hot[1].hot }}</span
-            ><br />
+            <img width="150" height="180" :src="hot[1].cover" alt="ERROR" style="float: left" />
+            <span class="top2_text1">{{ hot[1].name }}</span><br />
+            <span class="top2_text2">热度值:{{ hot[1].hot }}</span><br />
           </div>
         </div>
         <div class="top2" style="margin-left: 8px">
           <div @click="Movie_card_click(hot[2])">
             <div class="top_rank_num">3</div>
-            <img
-              width="150"
-              height="180"
-              :src="hot[2].cover"
-              alt="ERROR"
-              style="float: left"
-            />
-            <span class="top2_text1">{{ hot[2].name }}</span
-            ><br />
-            <span class="top2_text2">热度值:{{ hot[2].hot }}</span
-            ><br />
+            <img width="150" height="180" :src="hot[2].cover" alt="ERROR" style="float: left" />
+            <span class="top2_text1">{{ hot[2].name }}</span><br />
+            <span class="top2_text2">热度值:{{ hot[2].hot }}</span><br />
           </div>
         </div>
         <br />
         <!-- 第四位开始 -->
         <div class="top_more">
-          <el-row
-            v-for="(item, index) in hot.slice(3)"
-            :key="index"
-            :offset="1"
-            style="height: 50px; line-height: 50px"
-          >
-            <span class="top_more_span1"
-              ><span class="top_more_span2">{{ index + 4 }}</span
-              >&nbsp;{{ item.name }}</span
-            >
+          <el-row v-for="(item, index) in hot.slice(3)" :key="index" :offset="1"
+            style="height: 50px; line-height: 50px">
+            <span class="top_more_span1"><span class="top_more_span2">{{ index + 4 }}</span>&nbsp;{{ item.name }}</span>
             <span class="top_more_span3">热度值:{{ item.hot }}</span>
           </el-row>
         </div>
@@ -133,14 +90,14 @@ export default {
   data() {
     return {
       //轮播图
-      posterList: [{ url: "" }],
+      posterList: [{ url: "https://s1.ax1x.com/2022/03/31/qRtZDg.gif" }],
       //左侧热门电影区
-      movie_area: [{ name: "XXXX", cover: "", hot: "xxx", releaseTime: "" }],
+      movie_area: [{ name: "XXXX", cover: "https://s1.ax1x.com/2022/03/31/qRtZDg.gif", hot: "xxx", releaseTime: "" }],
       //右侧榜单
       hot: [
-        { name: "XXXX", cover: "", hot: "xxx" },
-        { name: "XXXX", cover: "", hot: "xxx" },
-        { name: "XXXX", cover: "", hot: "xxx" },
+        { name: "XXXX", cover: "https://s1.ax1x.com/2022/03/31/qRtZDg.gif", hot: "xxx" },
+        { name: "XXXX", cover: "https://s1.ax1x.com/2022/03/31/qRtZDg.gif", hot: "xxx" },
+        { name: "XXXX", cover: "https://s1.ax1x.com/2022/03/31/qRtZDg.gif", hot: "xxx" },
       ],
     };
   },
@@ -232,9 +189,7 @@ export default {
     this.RankQuery();
     console.log(this.posterList);
   },
-  Updated() {
-    //海报图POST
-  },
+
 };
 </script>
 
@@ -332,12 +287,12 @@ export default {
 }
 
 .top_more_span1 {
-  width:200px;
-  height:50px;
+  width: 200px;
+  height: 50px;
   float: left;
   color: black;
   font-size: 18px;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 .top_more_span2 {
@@ -376,7 +331,7 @@ export default {
   width: 170px;
   color: orange;
   font-size: 14px;
-  margin-left: 9px;
+  margin-left: 5px;
   margin-top: 3px;
   position: relative;
   background-color: rgb(235, 228, 220);
@@ -401,7 +356,7 @@ export default {
   overflow: hidden;
   display: inline-block;
   width: 170px;
-  height: 25px;
+  height: 22px;
   position: relative;
   top: -35px;
   color: white;

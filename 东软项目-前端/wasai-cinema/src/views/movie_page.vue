@@ -9,7 +9,7 @@
                 <span style="margin-left:10px">类型:</span>
                    </el-col>
                     <el-radio-group v-model="selectType" class="tag"  @change="tag_change()">
-                <el-radio-button v-for="(item,index) in typeList" :key="index" :label="item" class="tagRadiobutton" border size="mini" ></el-radio-button>
+                <el-radio-button v-for="(item,index) in typeList" :key="index" :label="item" class="tagRadiobutton" border-size="mini" ></el-radio-button>
                     </el-radio-group>
                  </el-row>  
              <el-row class="tagrow">
@@ -17,7 +17,7 @@
                 <span style="margin-left:10px">地区:</span>
                    </el-col>
                    <el-radio-group v-model="selectRegion" class="tag"  @change="tag_change()">
-                <el-radio-button v-for="(item,index) in regionList" :key="index" :label="item" class="tagRadiobutton" border size="mini"></el-radio-button>
+                <el-radio-button v-for="(item,index) in regionList" :key="index" :label="item" class="tagRadiobutton" border-size="mini"></el-radio-button>
                     </el-radio-group>
              </el-row>
             </div>
@@ -26,7 +26,9 @@
         <el-main>
         <!-- 电影区 -->
         <el-col :span="5" v-for="(item,index) in FliterMovieList" :key="index" :offset="1" style="margin-top:20px">
+       
         <div @click="Movie_card_click(item)">
+<el-link :underline="false">
       <el-card :body-style="{ padding: '13px 0px' }" style="margin-bottom:30px;height:330px" >
       <img :src="item.cover" style="width: 170px;height:250px" alt="ERROR" title=""/>
       <div style="padding: 5px;">
@@ -35,6 +37,7 @@
         </div>
       </div>
     </el-card>
+    </el-link>
         </div>
   </el-col>
         <!-- 电影区结束 -->

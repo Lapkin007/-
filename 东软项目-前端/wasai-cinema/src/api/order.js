@@ -1,5 +1,12 @@
 import service from "@/utils/request";
 
+//查询所有订单 2022/5/22 11:59
+export function QueryAllorder(){
+    return service({
+        url:'/api/order',
+        method:'get',
+    })
+}
 //查询个人订单 2022/5/20 14:52
 export function QueryOrderByUid(uid){
     return service({
@@ -21,5 +28,28 @@ export function SimPaySuccess(data){
         url:'/api/order/paySuccess',
         method:'post',
         data:data
+    })
+}
+//撤销订单接口 2022/5/22 14:33
+export function CancleOneOrder(vo){
+    return service({
+        url:'/api/order/cancle',
+        method:'delete',
+        data:vo,
+    })
+}
+//上报异常订单接口 2022/5/22 14:33
+export function PostOeOrder(vo){
+    return service({
+        url:'/api/oe',
+        method:'post',
+        data:vo,
+    })
+}
+//去的所有异常订单接口 2022/5/22 16:33
+export function GetAlloe(){
+    return service({
+        url:'/api/oe',
+        method:'get',
     })
 }

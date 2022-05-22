@@ -9,13 +9,14 @@
               <img src="../../assets/img/logo.png" />
               <div class="logotext">哇塞影院</div></div>
           </el-col>
-          <el-col :span="4">
+          <el-col :span="5">
               <el-link class="link_btn" href="#/" :underline="false" active-class="active" :style="$store.state.color1" @click="changecolor(1)" >首页</el-link>
               <el-link class="link_btn" href="#/movie_page" :underline="false" active-class="active" :style="$store.state.color2" @click="changecolor(2)">电影</el-link>
               <el-link class="link_btn" href="#/activities" :underline="false" active-class="active" :style="$store.state.color3" @click="changecolor(3)">活动</el-link>
               <el-link class="link_btn" href="#/comment" :underline="false" active-class="active" :style="$store.state.color4" @click="changecolor(4)"> 留言</el-link>
+              <el-link class="link_btn" href="#/worker_login" :underline="false" active-class="active"  > 客服登录</el-link>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="5">
               <!-- <el-input placeholder="请输入电影名" v-model="search" class="search_movie" clearable prefix-icon="el-icon-search"></el-input> 
               -->
               <div class="header-search">

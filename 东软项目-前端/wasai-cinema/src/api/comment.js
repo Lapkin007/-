@@ -43,3 +43,12 @@ export function UploadLeaveMessage(data){
         data:data
     })
 }
+
+//上传影院留言回复2022/5/17 21:16
+export function UploadLeaveMessageReply(data){
+    return service({
+        url:'/api/lm',
+        method:'put',
+        data:data
+    })
+}

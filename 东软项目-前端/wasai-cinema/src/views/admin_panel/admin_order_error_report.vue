@@ -3,10 +3,10 @@
     <!-- 头部显示栏 -->
       <div class="header">
         <el-row>
-          <el-col span="5" class="header-item" >订单ID</el-col>
-          <el-col span="5" class="header-item" style="padding-left:120px" >上报人</el-col>
-          <el-col span="4" class="header-item" style="padding-left:70px">异常处理状态</el-col>
-          <el-col span="10" class="header-item" style="padding-left:170px">操作</el-col>
+          <el-col :span="5" class="header-item" >订单ID</el-col>
+          <el-col :span="4" class="header-item" style="padding-left:0px" >上报人</el-col>
+          <el-col :span="5" class="header-item" style="padding-left:70px">异常处理状态</el-col>
+          <el-col :span="10" class="header-item" style="padding-left:170px">操作</el-col>
         </el-row>
       </div>
     <!-- 循环显示订单信息栏位-测试用-->
@@ -20,13 +20,13 @@
       </div> -->
   <!-- 折叠面板 -->
   <el-collapse v-model="activeNames">
-  <el-collapse-item  :name="index" disabled :key="index" v-for="(item,index) in testlist" style="border-bottom:1px solid black;">
+  <el-collapse-item  :name="index" disabled :key="index" v-for="(item,index) in Oe_list" style="border-bottom:1px solid black;">
     <template slot="title">
     <el-row style="background-color:white;width: 1800px;height: 48px;">
-         <el-col span="8" class="order-box-item1">{{item.order_id}}</el-col>
-         <el-col span="4" class="order-box-item1">{{item.reporter}}</el-col>
-         <el-col span="4" class="order-box-item2"><div :class="changeOrderCss(item)">{{item.statue}}</div></el-col>
-         <el-col span="8" class="order-box-item3">
+         <el-col :span="5" class="order-box-item1">{{item.id}}</el-col>
+         <el-col :span="6" class="order-box-item1">{{item.reviewer}}</el-col>
+         <el-col :span="5" class="order-box-item2"><div :class="changeOrderCss(item)">{{item.status}}</div></el-col>
+         <el-col :span="8" class="order-box-item3">
            <el-button class="wait1" @click="Operation_SolveOrder(index)">处理异常</el-button>
            <el-button class="PadButton" @click="changePad(index)">展开收起</el-button>
          </el-col>
@@ -34,13 +34,13 @@
         <!-- 折叠的面板内容,这里用来显示详细信息 -->
     </template>
     <div class="collapse-panel-item">ID:{{item.id}}</div>
-    <div class="collapse-panel-item">订单ID:{{item.order_id}}</div>
+    <div class="collapse-panel-item">订单ID:{{item.oid}}</div>
     <div class="collapse-panel-item">异常原因:{{item.reason}}</div>
-    <div class="collapse-panel-item">上报人:{{item.reporter}}</div>
-    <div class="collapse-panel-item">是否已处理完成:{{item.solve_statue}}</div>
-    <div class="collapse-panel-item">处理结果:{{item.solve_result}}</div>
-    <div class="collapse-panel-item">下单时间:{{item.report_time}}</div>
-    <div class="collapse-panel-item">支付时间:{{item.solve_time}}</div>
+    <div class="collapse-panel-item">上报人:{{item.reviewer}}</div>
+    <div class="collapse-panel-item">是否已处理完成:{{item.status}}</div>
+    <div class="collapse-panel-item">处理结果:{{item.result}}</div>
+    <div class="collapse-panel-item">创建时间:{{item.createTime}}</div>
+    
   </el-collapse-item>
 </el-collapse>
 <!-- 异常处理通知面板 -->
@@ -67,6 +67,10 @@
 </template>
 
 <script>
+import { QueryAdminAccount,QueryAdminInfo } from "@/api/admin";
+import { QueryAllorder ,CancleOneOrder,PostOeOrder,GetAlloe} from "@/api/order";//引入订单接口
+import { parseTime } from "@/plugins/DateTran";//日期格式转化
+import { Admin_Login_JS } from "@/plugins/AdminLogin";
 export default {
   data(){
     return{
@@ -81,47 +85,25 @@ export default {
           result:'',
         },
         //测试用展开后电影数据
-        order_detail:[
-          {
-            order_id:"123",
-            user_id:"12321321",
-            movie_id:"ji33232",
-            arrn_id:"ucbbr1",
-            movie_name:"刺杀小说家",
-            seat_no:"14",
-            order_cost:232,
-            order_time:"12:00",
-            pay_time:"13:00",
-          },
+        //  order_detail:[
+        //   {
+        //     order_id:"123",
+        //     user_id:"12321321",
+        //     movie_id:"ji33232",
+        //     arrn_id:"ucbbr1",
+        //     movie_name:"刺杀小说家",
+        //     seat_no:"14",
+        //     order_cost:232,
+        //     order_time:"12:00",
+        //     pay_time:"13:00",
+        //   },
           
-        ],
-      // 测试用
-      activeNames: [],
-      //测试用列表
-        testlist:[
-          {order_id:"1343-2341-2323-9212",
-            reporter:"lsshhh",
-           statue:"等待处理",
-            id:"123",
-            reason:"unknown",
-            solve_statue:false,
-            solve_result:"XXX",
-            report_time:"12:00",
-            solve_time:"13:00",
-           },
-          {order_id:"2332-2321-2122-8743",
-           reporter:"lhhh",
-           statue:"处理成功",
-           id:"12323",
-            reason:"unknown",
-            solve_statue:false,
-            solve_result:"XXX",
-            report_time:"12:00",
-            solve_time:"13:00",
-           },
-           
-        ],
-        //订单状态样式
+        // ],
+         // 测试用
+         activeNames: [],
+         //正式用
+         Oe_list:{},
+         //订单状态样式
            cancled:{cancle:true,pay:false,wait:false,fail:false},
            paid:{cancle:false,pay:true,wait:false,fail:false},
            waited:{cancle:false,pay:false,wait:true,fail:false},
@@ -129,14 +111,32 @@ export default {
     }
   },
   methods:{
+    //加载所有异常订单
+    LoadAllOe(){
+         GetAlloe().then((res)=>{
+           if(res.code==200)
+           {
+             console.log(res);
+                  this.Oe_list=res.data;
+             for(var i=0;i<this.Oe_list.length;i++)
+          {
+            //传入的时候改变其状态为文字表示
+          if(this.Oe_list[i].status==0){this.Oe_list[i].status="等待处理"}
+          if(this.Oe_list[i].status==1){this.Oe_list[i].status="处理成功"}
+            this.Oe_list[i].createTime=parseTime(new Date( this.Oe_list[i].createTime));
+
+            }
+           }
+         })
+    },
     //更改状态显示样式
     changeOrderCss:function(item){
-          if(item.statue=="已被撤销"){return this.cancled}//黄色
-          if(item.statue=="处理成功"){return this.paid}  //绿色
-          if(item.statue=="处理异常"){return this.waited}//蓝色
-          if(item.statue=="等待处理"){return this.failed}//红色
+          if(item.status=="已被撤销"){return this.cancled}//黄色
+          if(item.status=="处理成功"){return this.paid}   //绿色
+          if(item.status=="处理异常"){return this.waited} //蓝色
+          if(item.status=="等待处理"){return this.failed} //红色
       },
-    //上报按钮和通知
+    //处理按钮和通知
     Operation_SolveOrder:function(index){
       this.dialogSolveVisible=true;
       this.form_index=index;
@@ -159,23 +159,26 @@ export default {
          this.activeNames.pop(n);
        }
     }
-  }
+  },
+  created:function(){
+    this.LoadAllOe()
+  },
 }
 </script>
 
 <style scoped>
 .outbox{
   overflow: auto;
-  background-color: aqua;
+  background-color: rgb(143, 143, 143);
   height:760px;
 }
 /* 头部栏 */
 .header-item{
-  background-color:red;text-align:left;height: 50px;line-height: 50px;font-size: 20px;
+  background-color:rgb(177, 177, 177);text-align:left;height: 50px;line-height: 50px;font-size: 20px;
   font-weight: 600 !important;
 }
 .order-box{
-  border-bottom-color:aquamarine;height: 50px;text-align: center;font-size: 16px;line-height: 50px;
+  border-bottom-color:rgb(187, 187, 187);height: 50px;text-align: center;font-size: 16px;line-height: 50px;
   padding-bottom:5px;
   border-bottom:1px solid black;
 }
@@ -270,5 +273,9 @@ export default {
     /* 折叠板展开后的 */
     .collapse-panel-item{
         text-indent:2em;font-size:14px
+    }
+    /* 异常显示栏 */
+    .order-box-item2{
+      right:50px;
     }
 </style>

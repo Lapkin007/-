@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import login from '../views/login.vue'
+import worker_login from '../views/worker_login.vue'
 import admin_panel from '../views/admin_panel.vue'
 import register from '../views/register.vue'
 import home from '../views/home.vue'
 import comments from '../views/comments.vue'
+import comments_worker from '../views/comments_worker.vue'
 import activities from '../views/activities.vue'
 import film_detail from '../views/film_detail.vue'
 import ticket from '../views/ticket.vue'
@@ -24,6 +26,16 @@ const routes = [
     path: '/login',
     name: 'login',
     component: login
+  },
+  {
+    path: '/worker_login',
+    name: 'worker_login',
+    component: worker_login
+  },
+  {
+    path: '/comment_worker',
+    name: 'comment_worker',
+    component: comments_worker
   },
   {
     path: '/',
