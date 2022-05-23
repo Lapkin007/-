@@ -100,53 +100,116 @@
   <el-tab-pane name="third">
       <span slot="label" class="tabtag"><i class="el-icon-setting"></i>个人设置</span>
        <h2>个人设置</h2>
-       <div class="my_setting">
-           
-          <el-form ref="form" :model="form" label-width="80px">
-  <el-form-item label="昵称">
-    <el-input v-model="form.name" style="width:300px"></el-input>
-  </el-form-item>
-  <el-form-item label="密码">
-    <el-input v-model="form.password" style="width:300px" show-password></el-input>
-  </el-form-item>
-  <el-form-item label="出生年月">
-    <el-col :span="9">
-      <el-date-picker type="date" placeholder="选择日期" v-model="form.date" style="width:300px"></el-date-picker>
-    </el-col>
-  </el-form-item>
-
-  <el-form-item label="性别">
-    <el-radio-group v-model="form.sex">
-      <el-radio label="男"></el-radio>
-      <el-radio label="女"></el-radio>
-    </el-radio-group>
-  </el-form-item>
-  <el-form-item label="邮箱">
-    <el-input v-model="form.email" style="width:300px"></el-input>
-  </el-form-item>
-  <el-form-item label="个人简介">
-    <el-input type="textarea" style="width:300px" v-model="form.desc" maxlength="60" show-word-limit :autosize="{ minRows: 5, maxRows: 5}"></el-input>
-  </el-form-item>
-  <!-- 头像 -->
-  
-</el-form>
-
+       <div class="set">
+       <div class="basic_aside">
+      <el-form ref="form" :model="form" label-width="80px">
+        <el-form-item>
+          <p style="display:inline-block">昵称</p>
+          <el-input v-model="form.name" style="display:inline-block"></el-input>
+        </el-form-item>
+        <el-form-item prop="pass">
+          <p>密码</p>
+          <el-input
+            type="password"
+            v-model="ruleForm.pass"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item>
+          <p>性别</p>
+          <el-radio-group v-model="form.sex">
+            <el-radio label="男"></el-radio>
+            <el-radio label="女"></el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item>
+          <p>出生年月</p>
+          <el-col :span="11">
+            <el-date-picker
+              type="date"
+              placeholder="选择日期"
+              v-model="form.date1"
+              style="width: 100%"
+            ></el-date-picker>
+          </el-col>
+        </el-form-item>
+         <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" >
+        <el-form-item
+          prop="email"
+          :rules="[
+            { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+            {
+              type: 'email',
+              message: '　　　　　　　　请输入正确的邮箱地址',
+              trigger: ['blur', 'change'],
+            },
+          ]"
+        >
+          <p style="display:block;position:relative;left:80px">邮箱</p>
+          <el-input style="display:block;position:relative;left:80px" v-model="dynamicValidateForm.email"></el-input>
+        </el-form-item>
+        </el-form>
+        <el-form-item>
+          <p>个人简介</p>
+          <el-input type="textarea" v-model="form.desc"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit2()">更新基本信息</el-button>
+          <el-button>取消</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+      <div class="picture">
+      <div><el-upload
+						class="avatar-uploader"
+            action="http://localhost:8081/api/user/upload"
+						:show-file-list="false"
+						:on-success="handleAvatarSuccess"
+						:before-upload="beforeAvatarUpload">
+						<img v-if="imageUrl" :src="imageUrl" class="avatar">
+						<i v-else class="el-icon-plus avatar-uploader-icon"></i>
+					</el-upload></div>
+      <!-- <el-button type="primary" class="btn">点击上传</el-button> -->
+      <p>只能上传jpg/png图片</p>
+      <p>不能带有特殊符号</p>
+    </div>
        </div>
-      
-
       </el-tab-pane>
 </el-tabs>
 </div>
 </template>
 
 <script>
-
+import{ModifySelf} from "@/api/user"
 import{QueryCart,DeleteCart} from "@/api/cart";
 import{QueryOrderByUid,SimPaySuccess,SimPayFail} from "@/api/order";
 import { parseTime } from "@/plugins/DateTran";//日期格式转化
 export default {
      data(){
        return{
+         //个人设置信息单
+        imageUrl:'',
+        dynamicValidateForm:{
+        domains: [
+          {
+            value: "",
+          },
+        ],
+        email: "", //邮箱
+      },
+      ruleForm: { pass: "" }, //密码
+      form: {
+        name: "", //昵称
+        region: "",
+        date1: "",//生日
+        date2: "",
+        delivery: false,
+        type: [],
+        sex: "",// 性别
+        desc: "", //个人介绍
+      },
+			fileName:'',
+
          //暂存信息
          item:{},
          index:99,
@@ -175,18 +238,6 @@ export default {
         state1:[{color:"red"},{state_desc:"支付失败"}],
         state2:[{color:"green"},{state_desc:"支付成功"}],
         state3:[{color:"blue"},{state_desc:"已被撤销"}],
-        // 个人设置表单
-        form: {
-          name: '',
-          password: '',
-          date: '',
-          sex: '男',
-          desc: '',
-          email:"",
-        },
-
-         //头像上传
-         imageUrl: '', 
 
        }
      },
@@ -199,6 +250,55 @@ export default {
        }
      },
      methods:{
+       //个人信息
+       beforeAvatarUpload(file) {
+			const isJPG = file.type === 'image/jpeg';
+			const isLt2M = file.size / 1024 / 1024 < 2;
+
+			if (!isJPG) {
+				this.$message.error('上传头像图片只能是 JPG 格式!');
+			}
+			if (!isLt2M) {
+				this.$message.error('上传头像图片大小不能超过 2MB!');
+			}
+			return isJPG && isLt2M;
+		},
+		handleAvatarSuccess(res, file) {
+			console.log(res.data.fileName);
+			this.fileName=res.data.fileName;
+			this.imageUrl = URL.createObjectURL(file.raw);
+		
+		},
+    onSubmit2() {
+			let data={
+				password:this.ruleForm.pass,
+				avatar:this.fileName,
+				nickname:this.form.name,
+				email:this.dynamicValidateForm.email,
+				birthday:this.form.date1,
+				gender:this.form.sex,
+				info:this.form.desc,
+				id:localStorage.getItem("uid"),
+			};
+			console.log(data);
+			
+			ModifySelf(data).then((res)=>{
+				if(res.code==200)
+        {
+          if(res.data.success=="success")
+          {
+            this.$message({message:res.data.msg,type:res.data.success})
+            window.location.reload();
+          }
+          else{
+            this.$message.error("更新失败")
+          }
+        }
+        else{
+          this.$message.error("请求失败")
+        }
+			});
+    },
        //删除弹框方法
        ClickDelete(item,index)
        {
@@ -376,7 +476,7 @@ export default {
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .all{width:1400px;overflow:auto;margin:20px auto}
 .tabtag{display:block;width:200px;text-align:center;font-size:20px}
 /* 购物车页 */
@@ -400,6 +500,74 @@ export default {
   width:1100px;height:700px;margin-top:30px;overflow:hidden;
 }
 /* 头像设置 */
+// .avatar-uploader .el-upload {
+//     border: 1px dashed #d9d9d9;
+//     border-radius: 6px;
+//     cursor: pointer;
+//     position: relative;
+//     overflow: hidden;
+//   }
+//   .avatar-uploader .el-upload:hover {
+//     border-color: #409EFF;
+//   }
+//   .avatar-uploader-icon {
+//     font-size: 28px;
+//     color: #8c939d;
+//     width: 178px;
+//     height: 178px;
+//     line-height: 178px;
+//     text-align: center;
+//   }
+//   .avatar {
+//     width: 178px;
+//     height: 178px;
+//     display: block;
+//   }
+  .all .el-tabs__item{height:200px !important}
+
+  .set {
+  float: left;
+  width: 830px;
+  height: 600px;
+  overflow: auto;
+  //   margin: 0 auto;
+//   border: 1px solid rgb(158, 156, 156);
+textarea{
+     resize:none;
+}
+  .basic_aside {
+    width: 400px;
+    float: left;
+    margin: 20px;
+    .text {
+      font-size: 28px;
+      margin-left: 80px;
+      height: 80px;
+      line-height: 80px;
+    }
+  }
+  .picture {
+    float: right;
+    margin: 70px;
+    div {
+      width: 120px;
+      height: 120px;
+      background: rgb(197, 197, 197);
+      //   margin-left: 20px;
+    }
+    .btn {
+      margin-top: 40px;
+      width: 120px;
+    }
+    p {
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      font-size: 14px;
+      color: gray;
+    }
+  }
+}
 .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
@@ -413,16 +581,14 @@ export default {
   .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
+    width: 120px;
+    height: 120px;
+    line-height: 120px;
     text-align: center;
   }
   .avatar {
-    width: 178px;
-    height: 178px;
+    width: 120px;
+    height: 120px;
     display: block;
   }
-  .all .el-tabs__item{height:200px !important}
 </style>
-

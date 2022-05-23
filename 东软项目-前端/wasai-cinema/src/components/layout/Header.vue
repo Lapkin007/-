@@ -158,7 +158,7 @@ data(){
             UserInfo(vo).then((res)=>
             {
                 if(res.code==200){   
-                this.nickname=res.data.username; this.avatar=res.data.avatar;
+                this.nickname=res.data.nickname; this.avatar=res.data.avatar;
                 console.log("查询个人信息header中的QueryUserInfo");
                 console.log(res);
                 this.$store.state.islogin=true;

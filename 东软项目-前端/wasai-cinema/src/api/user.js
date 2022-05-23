@@ -51,3 +51,11 @@ export function SendEmailCode(data) {
         data:data
     })
 }
+//修改信息
+export function ModifySelf(data) { //id自动
+    return service({
+        url: '/api/user/modify',
+        method: 'post',
+				data:data
+    })
+}
