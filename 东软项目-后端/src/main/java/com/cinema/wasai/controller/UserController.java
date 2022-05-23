@@ -10,11 +10,13 @@ import com.cinema.wasai.util.JwtTokenUtil;
 import com.cinema.wasai.util.MD5Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 @RestController
 @CrossOrigin
@@ -131,8 +133,61 @@ public class UserController {
         int id=vo.getId();
         log.info("UserController---------------->getUserId(@RequestBody UserIdVo vo)");
         User user = userService.selectByPrimaryKey(id);
+        user.setAvatar(MyConstants.MY_URL+user.getAvatar());
         //user.setAvatar(MyConstants.MY_URL+user.getAvatar());
         return  user;
     }
+
+    @Value("${zsp.poster.upload}")
+    String upload;
+    //文件上传要分开处理
+    @PostMapping("/upload")
+    public Map<String,String> uploadFile(MultipartFile file) throws IOException {
+        log.info("UserController---------------->uploadFile()");
+        File path = new File(upload);
+        Map<String,String> map = new HashMap<>();
+
+        if(!path.exists()){
+            path.mkdirs();//文件夹不存在，创建文件夹
+        }
+        String originalFilename = file.getOriginalFilename();//获得原始的文件名 "a.jpg"
+        int index=originalFilename.lastIndexOf(".");
+        String newName = originalFilename.substring(0,index)+"_"+ UUID.randomUUID().toString()+originalFilename.substring(index);
+        //保存文件
+        try {
+            file.transferTo(new File(upload+newName));//不出现异常，就是文件上传成功
+            map.put("fileName","/images123/"+newName );//返回新的文件名（新增的）
+        } catch (IOException e) {
+            map.put("fileName","error");
+            e.printStackTrace();//文件上传失败
+            throw e;
+        }
+        return map;
+    }
+    //修改个人信息
+    @PostMapping("/modify")
+    public Map<String,Object> modify(@RequestBody User user) {
+        log.info("UserController---------------->modify()");
+        //查询（通过Id查询当前用户）
+        User temp = userService.selectByPrimaryKey(user.getId());
+        //把原始的密码进行加密
+        String newPass = MD5Util.md5To32String(user.getPassword(),temp.getSalt(),temp.getSaltIndex());
+        user.setPassword(newPass);//加密后的密码
+        System.out.println(user);
+        //修改
+        int value=userService.updateByPrimaryKeySelective(user);//通过主键修改其他非空的字段
+        Map<String,Object> map = new HashMap<>();
+       if(value==1)
+       {map.put("token","oook");
+           map.put("msg","更新成功");
+           map.put("success","success");
+       }else{
+        map.put("token","nook");
+        map.put("msg","更新成功");
+        map.put("success","fail");
+       }
+        return map;
+    }
+
 }
 

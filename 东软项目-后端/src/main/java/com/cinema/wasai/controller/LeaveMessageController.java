@@ -1,5 +1,6 @@
 package com.cinema.wasai.controller;
 
+import com.cinema.wasai.config.MyConstants;
 import com.cinema.wasai.model.entiy.LeavingMessage;
 import com.cinema.wasai.model.entiy.User;
 import com.cinema.wasai.model.entiy.WorkerEvaluate;
@@ -30,6 +31,7 @@ public class LeaveMessageController {
         CommentList=leavingMessageService.selectAllLeavingMessagesAndUser();
         for(int i=0;i<CommentList.size();i++){
             User user=userService.selectByPrimaryKey(CommentList.get(i).getUid());
+            user.setAvatar(MyConstants.MY_URL+user.getAvatar());
             CommentList.get(i).setUser(user);
         }
         return CommentList;
