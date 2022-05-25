@@ -84,3 +84,93 @@ export function PostToCart(vo){
         data:vo,
     })
 }
+
+//添加一个电影 2022/5/24 15:21
+
+export function AddOneFilm(vo){
+    return service({
+        url:'/api/film',
+        method:'post',
+        data:vo
+    })
+}
+//删除一个电影 2022/5/24 15:43
+
+export function DeleteOneFilm(id){
+    return service({
+        url:'/api/film?id='+id,
+        method:'delete',
+        data:id
+    })
+}
+
+//修改一个电影 2022/5/24 16：18
+export function ModifyFilm(data) { //id自动
+    return service({
+        url: '/api/film/modify',
+        method: 'post',
+		data:data
+    })
+}
+
+//查询所有的排片和附带的电影和座位 2022/5/24 16：18
+export function QueryAllArrWithFilmAndSeats() { //id自动
+    return service({
+        url: '/api/arrangement',
+        method: 'get',
+		
+    })
+}
+
+//更新电影场次 2022/5/24 16：18
+export function UpdateArrInfo(vo) { //id自动
+    return service({
+        url: '/api/arrangement/modify',
+        method: 'post',
+		data:vo
+    })
+}
+
+//删除电影场次 2022/5/24 16：18
+export function DeleteOneArr(aid) { //id自动
+    return service({
+        url: '/api/arrangement?aid='+aid,
+        method: 'delete',
+    })
+}
+
+//增加电影场次 2022/5/24 23：54
+export function AddArr(vo) { //id自动
+    return service({
+        url: '/api/arrangement',
+        method: 'put',
+        data:vo,
+    })
+}
+//查询管理端轮播图海报 2022/3/31 10:30
+
+export function ListAllPostAdmin(){
+    return service({
+        url:'/api/poster/all',
+        method:'get',
+    })
+}
+
+//删除一个轮播图 2022/3/31 10:30
+
+export function DeletePoster(id){
+    return service({
+        url:'/api/poster/'+id,
+        method:'delete',
+    })
+}
+
+//更新一个轮播图 2022/3/31 10:30
+
+export function UpdatePoster(vo){
+    return service({
+        url:'/api/poster/modify',
+        method:'post',
+        data:vo,
+    })
+}

@@ -27,6 +27,15 @@ public class UserController {
     @Autowired
     UserService userService;
     //验证用户名是否存在
+    @GetMapping("")
+    public List<User> getAllUser(){
+        log.info("查询所有的用户");
+        List<User> us=userService.selectAllUsers();
+        for(User list:us){
+            list.setAvatar(MyConstants.MY_URL+list.getAvatar());
+        }
+        return us;
+    };
     @PostMapping("/isExist")
     public Map<String,String> isExist(@RequestBody EmailVo vo){
         log.info("UserController---------------->isExist(EmailVo vo)");
@@ -61,7 +70,7 @@ public class UserController {
             user.setStatus(0);
             user.setErrorNum(0);
             user.setEmail(vo.getEmail());
-            user.setAvatar("https://s1.ax1x.com/2022/04/01/qhEn78.jpg");//默认头像
+            user.setAvatar("/images123/turtle2.jpg");//默认头像
             user.setNickname("User");//默认昵称
             int insert = userService.insert(user);
             if(insert==1){
@@ -152,7 +161,7 @@ public class UserController {
         }
         String originalFilename = file.getOriginalFilename();//获得原始的文件名 "a.jpg"
         int index=originalFilename.lastIndexOf(".");
-        String newName = originalFilename.substring(0,index)+"_"+ UUID.randomUUID().toString()+originalFilename.substring(index);
+        String newName = originalFilename.substring(0,index)+"USER"+ UUID.randomUUID().toString()+originalFilename.substring(index);
         //保存文件
         try {
             file.transferTo(new File(upload+newName));//不出现异常，就是文件上传成功
@@ -186,6 +195,22 @@ public class UserController {
         map.put("msg","更新成功");
         map.put("success","fail");
        }
+        return map;
+    }
+    @DeleteMapping("/{id}")
+    public Map<String,Object> DeleteOneUser(@PathVariable Integer id)
+    {
+        Map<String,Object> map=new HashMap<>();
+        int value=userService.deleteByPrimaryKey(id);
+        if(value==1)
+        {map.put("token","oook");
+            map.put("msg","更新成功");
+            map.put("success","success");
+        }else{
+            map.put("token","nook");
+            map.put("msg","更新失败");
+            map.put("success","fail");
+        }
         return map;
     }
 

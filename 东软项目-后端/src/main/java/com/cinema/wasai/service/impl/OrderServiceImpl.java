@@ -112,4 +112,10 @@ public class OrderServiceImpl implements OrderService{
 		return orderMapper.updateByPrimaryKey(record);
 	}
 
+	@Override
+	public int updateByAidSelective(Order record) {
+		log.info("修改Order信息:updateByAidSelective() ");
+		return orderMapper.updateByAidSelective(record);
+	}
+
 }

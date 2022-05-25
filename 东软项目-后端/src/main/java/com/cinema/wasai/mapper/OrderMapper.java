@@ -109,5 +109,10 @@ public interface OrderMapper{
 	 * 
 	 **/
 	public int updateByPrimaryKey ( Order record );
-
+	/**
+	 *
+	 * 修改 （匹配Aid有值的字段）
+	 *
+	 **/
+	public int updateByAidSelective( Order record );
 }

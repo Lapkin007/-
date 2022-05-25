@@ -1,5 +1,6 @@
 package com.cinema.wasai.controller;
 
+import com.cinema.wasai.config.MyConstants;
 import com.cinema.wasai.model.entiy.*;
 import com.cinema.wasai.model.vo.CartVo;
 import com.cinema.wasai.service.*;
@@ -106,6 +107,7 @@ public class CartController {
         for(int i=0;i<cart.size();i++) {
             Arrangement arr = arrangementService.selectByPrimaryKey(cart.get(i).getAid());
             Film film = filmService.selectByPrimaryKey(arr.getFid());
+            film.setCover(MyConstants.MY_URL+film.getCover());
             //把前面取到的全部放入MyCart类
             MyCart myCart=new MyCart();
             Cart ca=new Cart();

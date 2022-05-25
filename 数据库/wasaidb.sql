@@ -11,7 +11,7 @@
  Target Server Version : 80011
  File Encoding         : 65001
 
- Date: 23/05/2022 09:44:15
+ Date: 25/05/2022 01:04:59
 */
 
 SET NAMES utf8mb4;
@@ -30,7 +30,7 @@ CREATE TABLE `t_activity`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '添加时间（格式2022-01-14\\n11:37:03）',
   `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间 (格式2022-01)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.8 活动表（t_activity）' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.8 活动表（t_activity）' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_activity
@@ -49,12 +49,12 @@ CREATE TABLE `t_admin`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.2 管理员表（t_admin）' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.2 管理员表（t_admin）' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_admin
 -- ----------------------------
-INSERT INTO `t_admin` VALUES (1, 'admin', 'admin', 'https://s1.ax1x.com/2022/05/22/OvzaTS.jpg', '2022-05-22 10:12:34', '2022-05-22 10:12:36');
+INSERT INTO `t_admin` VALUES (1, 'admin', 'admin', '/images123/eiri.jpg', '2022-05-22 10:12:34', '2022-05-22 10:12:36');
 
 -- ----------------------------
 -- Table structure for t_arrangement
@@ -83,8 +83,9 @@ CREATE TABLE `t_arrangement`  (
 INSERT INTO `t_arrangement` VALUES (7, 1, '刺杀小说家', 40, 0, 35.5, '3D放映', '2021-04-05', '12:00:00', '14:10:00', 'admin', '2022-05-18 00:02:18', '2022-05-18 00:02:20');
 INSERT INTO `t_arrangement` VALUES (8, 1, '刺杀小说家', 30, 0, 30.0, '2D放映', '2021-04-04', '11:00:00', '11:10:00', 'admin', '2022-05-18 00:02:18', '2022-05-18 00:02:20');
 INSERT INTO `t_arrangement` VALUES (9, 1, '刺杀小说家', 20, 0, 30.0, '2D放映', '2021-04-06', '11:00:00', '11:10:00', 'admin', '2022-05-18 00:02:18', '2022-05-18 00:02:20');
-INSERT INTO `t_arrangement` VALUES (10, 2, '哥斯拉大战金刚', 30, 0, 50.0, '3D放映', '2022-06-20', '16:00:00', '18:00:00', 'admin', '2022-05-21 18:31:15', '2022-05-21 18:31:19');
+INSERT INTO `t_arrangement` VALUES (10, 2, '哥斯拉大战金刚', 30, 0, 50.0, '3D放映', '2022-06-20', '18:00:00', '20:00:00', 'admin', '2022-05-21 18:31:15', '2022-05-21 18:31:19');
 INSERT INTO `t_arrangement` VALUES (11, 3, '神奇动物', 30, 0, 50.0, '3D放映', '2022-06-20', '16:00:00', '18:00:00', 'admin', '2022-05-21 18:31:15', '2022-05-21 18:31:19');
+INSERT INTO `t_arrangement` VALUES (13, 1, '刺客', 23, 0, 45.0, '2D', '2022-05-15', '11:00:00', '12:00:00', 'ice', '2022-05-24 16:06:01', '2022-05-24 16:06:01');
 
 -- ----------------------------
 -- Table structure for t_cart
@@ -101,12 +102,11 @@ CREATE TABLE `t_cart`  (
   `create_time` datetime NULL DEFAULT NULL,
   `update_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 57 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.15 购物车表（t_cart）' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 60 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.15 购物车表（t_cart）' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_cart
 -- ----------------------------
-INSERT INTO `t_cart` VALUES (50, 1, 8, 0, '21312323', 19, 30, '2022-05-20 07:22:53', '2022-05-20 07:22:53');
 
 -- ----------------------------
 -- Table structure for t_film
@@ -132,10 +132,10 @@ CREATE TABLE `t_film`  (
 -- ----------------------------
 -- Records of t_film
 -- ----------------------------
-INSERT INTO `t_film` VALUES (1, '刺杀小说家', '2021-02-12 00:00:00', '科幻', 1, '内地', 7, '\"异世界皇都，天神赤发鬼残暴统治，滥杀无辜。少年空文因被赤发鬼追杀，决 定奋起反击。在黑甲的指引下，踏上了凡人弑神之路。这是小说家路空文笔下的奇幻世界。没想到小说的进 程，竟然影响着现实世界。这时一名男子接下了刺杀他的任务…\\n', 'https://s1.ax1x.com/2022/03/31/qRNxkd.jpg', 130, '0', '2022-05-16 09:32:48', '2022-05-16 09:32:51');
-INSERT INTO `t_film` VALUES (2, '哥斯拉大战金刚 Godzilla vs Kong (2021)', '2021-03-26 00:00:00', '科幻', 1, '美国', 2, '这两位宛如神衹一般强大的对手于一场壮观的战争中相遇，彼时世界命运正悬 于一线。为了找到真正的家园，金刚与他的保护者们踏上了一次艰难的旅程。与他们一道前行的还有一个年轻 的孤儿女孩——吉雅，这个女孩与金刚之间存在着一种独特而强大的紧密联系。但意想不到的是，他们在前行的 航道上与愤怒的哥斯拉狭路相逢，也由此在全球引起了一系列破坏。一股无形的力量造成了这两只巨兽之间的 巨大冲突，深藏在地心深处的奥秘也由此揭开。', 'https://s1.ax1x.com/2022/03/31/qRaB2q.jpg', 116, '0', '2022-05-16 09:38:54', '2022-05-16 09:38:57');
-INSERT INTO `t_film` VALUES (3, '神奇动物:邓布利多之谜', '2022-04-08 16:41:44', '冒险', 1, '美国', 12, '该片讲述了邓布利多意识到强大的黑巫师格林德沃正试图夺取魔法世界的控制权，于是委托魔法动物学家纽特带领一支精良的团队执行对抗格林德沃的危险任务的故事', 'https://s1.ax1x.com/2022/05/20/OOuAnH.jpg', 142, '0', '2022-05-20 16:43:03', '2022-05-20 16:43:05');
-INSERT INTO `t_film` VALUES (4, '封神榜:哪吒重生', '2021-02-12 16:48:14', '动作', 1, '内地', 9, '三千年前，天下动荡，人神共遇大劫，不想哪吒的一缕魂魄逃脱天罗地网，世世转世投胎，这一世的他与东海市酷爱机车的热血青年李云祥（杨天翔 配音）人神共生。然而龙族对哪吒恩怨并未善罢甘休，有着哪吒元神的李云祥，亦无法逃脱被龙族赶尽杀绝的宿命。此后，东海危在旦夕，而李云祥则最终与哪吒元神并肩作战，拯救了东海市的子民，并成为了抵抗龙族的英雄', 'https://s1.ax1x.com/2022/03/31/qRtebQ.jpg', 116, '0', '2022-05-20 16:47:48', '2022-05-20 16:47:52');
+INSERT INTO `t_film` VALUES (1, '刺杀小说家', '2021-02-12 00:00:00', '科幻', 1, '内地', 7, '\"异世界皇都，天神赤发鬼残暴统治，滥杀无辜。少年空文因被赤发鬼追杀，决 定奋起反击。在黑甲的指引下，踏上了凡人弑神之路。这是小说家路空文笔下的奇幻世界。没想到小说的进 程，竟然影响着现实世界。这时一名男子接下了刺杀他的任务…\\n', '/images123/csxsj.jpg', 130, '0', '2022-05-16 09:32:48', '2022-05-16 09:32:51');
+INSERT INTO `t_film` VALUES (2, '哥斯拉大战金刚 Godzilla vs Kong (2021)', '2021-03-26 00:00:00', '科幻', 1, '美国', 2, '这两位宛如神衹一般强大的对手于一场壮观的战争中相遇，彼时世界命运正悬 于一线。为了找到真正的家园，金刚与他的保护者们踏上了一次艰难的旅程。与他们一道前行的还有一个年轻 的孤儿女孩——吉雅，这个女孩与金刚之间存在着一种独特而强大的紧密联系。但意想不到的是，他们在前行的 航道上与愤怒的哥斯拉狭路相逢，也由此在全球引起了一系列破坏。一股无形的力量造成了这两只巨兽之间的 巨大冲突，深藏在地心深处的奥秘也由此揭开。', '/images123/gsl.jpg', 116, '0', '2022-05-16 09:38:54', '2022-05-16 09:38:57');
+INSERT INTO `t_film` VALUES (3, '神奇动物:邓布利多之谜', '2022-04-08 16:41:44', '冒险', 1, '美国', 12, '该片讲述了邓布利多意识到强大的黑巫师格林德沃正试图夺取魔法世界的控制权，于是委托魔法动物学家纽特带领一支精良的团队执行对抗格林德沃的危险任务的故事', '/images123/sqdw.jpg', 142, '0', '2022-05-20 16:43:03', '2022-05-20 16:43:05');
+INSERT INTO `t_film` VALUES (4, '封神榜:哪吒重生', '2021-02-12 16:48:14', '动作', 1, '内地', 9, '三千年前，天下动荡，人神共遇大劫，不想哪吒的一缕魂魄逃脱天罗地网，世世转世投胎，这一世的他与东海市酷爱机车的热血青年李云祥（杨天翔 配音）人神共生。然而龙族对哪吒恩怨并未善罢甘休，有着哪吒元神的李云祥，亦无法逃脱被龙族赶尽杀绝的宿命。此后，东海危在旦夕，而李云祥则最终与哪吒元神并肩作战，拯救了东海市的子民，并成为了抵抗龙族的英雄', '/images123/fengshenbang.jpg', 116, '0', '2022-05-20 16:47:48', '2022-05-24 08:36:24');
 
 -- ----------------------------
 -- Table structure for t_film_evaluate
@@ -150,7 +150,7 @@ CREATE TABLE `t_film_evaluate`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '添加时间（格式2022-01-14\\n11:37:03）',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.12 电影评论表（t_film_evaluate）' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.12 电影评论表（t_film_evaluate）' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_film_evaluate
@@ -173,7 +173,7 @@ CREATE TABLE `t_leaving_message`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '添加时间（格式2022-01-14\\n11:37:03）',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.6 影院留言表（t_leaving_message）' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.6 影院留言表（t_leaving_message）' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_leaving_message
@@ -198,25 +198,14 @@ CREATE TABLE `t_order`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '添加时间（格式2022-01-14 11:37:03）',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.13 订单表（t_order）' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.13 订单表（t_order）' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_order
 -- ----------------------------
-INSERT INTO `t_order` VALUES (26, 1, '567890', 9, '4', 30, 3, NULL, '2022-05-19 15:16:54', '2022-05-19 15:16:54');
-INSERT INTO `t_order` VALUES (27, 1, '567890', 9, '16', 30, 2, NULL, '2022-05-19 15:16:54', '2022-05-19 15:16:54');
-INSERT INTO `t_order` VALUES (28, 1, '567890', 9, '9', 30, 3, NULL, '2022-05-19 15:16:54', '2022-05-19 15:16:54');
-INSERT INTO `t_order` VALUES (29, 1, '12322222', 7, '15', 36, 2, NULL, '2022-05-19 16:00:33', '2022-05-19 16:00:33');
-INSERT INTO `t_order` VALUES (30, 1, '12322222', 7, '30', 36, 2, NULL, '2022-05-19 16:00:33', '2022-05-19 16:00:33');
-INSERT INTO `t_order` VALUES (31, 1, '21312323', 8, '3', 30, 2, NULL, '2022-05-20 07:22:53', '2022-05-20 07:22:53');
-INSERT INTO `t_order` VALUES (32, 1, '21312323', 8, '7', 30, 1, NULL, '2022-05-20 07:22:53', '2022-05-20 07:22:53');
-INSERT INTO `t_order` VALUES (33, 1, '21312323', 8, '19', 30, 0, NULL, '2022-05-20 07:22:53', '2022-05-20 07:22:53');
-INSERT INTO `t_order` VALUES (34, 2, '13075918709', 9, '4', 30, 3, NULL, '2022-05-21 02:13:17', '2022-05-21 02:13:17');
-INSERT INTO `t_order` VALUES (35, 2, '13075918709', 9, '5', 30, 3, NULL, '2022-05-21 02:13:17', '2022-05-21 02:13:17');
-INSERT INTO `t_order` VALUES (36, 2, '13075918709', 10, '4', 50, 2, '2022-05-22 04:26:56', '2022-05-21 10:35:13', '2022-05-21 10:35:13');
-INSERT INTO `t_order` VALUES (37, 2, '13075918709', 11, '16', 50, 3, '2022-05-22 04:27:22', '2022-05-22 04:26:48', '2022-05-22 07:18:57');
-INSERT INTO `t_order` VALUES (38, 2, '13075918709', 11, '7', 50, 3, NULL, '2022-05-22 04:26:48', '2022-05-22 07:03:00');
-INSERT INTO `t_order` VALUES (39, 2, '13075918709', 11, '1', 50, 3, NULL, '2022-05-22 07:05:34', '2022-05-22 07:05:46');
+INSERT INTO `t_order` VALUES (55, 2, '13075918709', 7, '1', 36, 3, NULL, '2022-05-24 15:32:30', '2022-05-24 15:32:30');
+INSERT INTO `t_order` VALUES (56, 2, '13075918709', 7, '2', 36, 2, '2022-05-24 15:32:46', '2022-05-24 15:32:30', '2022-05-24 15:32:30');
+INSERT INTO `t_order` VALUES (57, 2, '13075918709', 7, '3', 36, 2, '2022-05-24 15:32:46', '2022-05-24 15:32:30', '2022-05-24 15:32:30');
 
 -- ----------------------------
 -- Table structure for t_order_exception
@@ -233,12 +222,13 @@ CREATE TABLE `t_order_exception`  (
   `create_time` datetime NOT NULL COMMENT '添加时间（格式2022-01-14\\n11:37:03）',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.14 异常订单表（t_order_exception）' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.14 异常订单表（t_order_exception）' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_order_exception
 -- ----------------------------
-INSERT INTO `t_order_exception` VALUES (1, 39, '手误', 0, NULL, '啦啦啦', NULL, '2022-05-22 07:54:40', '2022-05-22 07:54:40');
+INSERT INTO `t_order_exception` VALUES (3, 57, 'aaaaaa', 0, NULL, 'aaaa', NULL, '2022-05-24 15:33:04', '2022-05-24 15:33:04');
+INSERT INTO `t_order_exception` VALUES (4, 57, 'aaaaaaa', 1, 'sdsdsd', 'aaaa', NULL, '2022-05-24 15:33:11', '2022-05-24 15:33:11');
 
 -- ----------------------------
 -- Table structure for t_poster
@@ -253,18 +243,19 @@ CREATE TABLE `t_poster`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '添加时间（格式2022-01-14\\n11:37:03）',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.5 轮播图广告表（t_poster）' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.5 轮播图广告表（t_poster）' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_poster
 -- ----------------------------
-INSERT INTO `t_poster` VALUES (1, 1, '狮子王', '/images123/szw.png', 0, '2022-05-13 10:23:07', '2022-05-13 10:23:10');
+INSERT INTO `t_poster` VALUES (1, 1, '狮子王', '/images123/szw.png', 0, '2022-05-13 10:23:07', '2022-05-24 16:57:20');
 INSERT INTO `t_poster` VALUES (2, 2, '小小的愿望', '/images123/xxdyw.png', 0, '2022-05-13 10:31:53', '2022-05-13 10:31:56');
 INSERT INTO `t_poster` VALUES (3, 3, '神奇动物-邓布利多之谜', '/images123/sqdwp.jpg', 1, '2022-05-20 16:40:09', '2022-05-20 16:40:11');
 INSERT INTO `t_poster` VALUES (4, 4, '受益人', '/images123/syr.png', 0, '2022-05-13 10:33:12', '2022-05-13 10:33:14');
-INSERT INTO `t_poster` VALUES (5, 5, '朝花夕誓', '/images123/zhxs.jpg', 1, '2022-05-20 16:36:50', '2022-05-20 16:36:51');
+INSERT INTO `t_poster` VALUES (5, 5, '朝花夕誓', '/images123/zhxs.jpg', 0, '2022-05-20 16:36:50', '2022-05-20 16:36:51');
 INSERT INTO `t_poster` VALUES (6, 6, '一代宗师', '/images123/ydzs.jpg', 1, '2022-05-20 16:37:18', '2022-05-20 16:37:21');
 INSERT INTO `t_poster` VALUES (7, 7, '海兽之子', '/images123/hszz.jpg', 1, '2022-05-13 10:32:45', '2022-05-13 10:32:48');
+INSERT INTO `t_poster` VALUES (10, 8, '沙丘', '/images123/dune.jpg', 1, '2022-05-24 19:47:36', '2022-05-24 19:47:39');
 
 -- ----------------------------
 -- Table structure for t_registration
@@ -277,7 +268,7 @@ CREATE TABLE `t_registration`  (
   `create_time` datetime NOT NULL COMMENT '添加时间（格式2022-01-14\\n11:37:03）',
   `update_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.9 活动参与表（t_registration）' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.9 活动参与表（t_registration）' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_registration
@@ -296,18 +287,13 @@ CREATE TABLE `t_seat`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 57 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 60 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_seat
 -- ----------------------------
-INSERT INTO `t_seat` VALUES (44, 9, 16, '2022-05-19 15:16:54', '2022-05-19 15:16:54');
-INSERT INTO `t_seat` VALUES (46, 7, 15, '2022-05-19 16:00:33', '2022-05-19 16:00:33');
-INSERT INTO `t_seat` VALUES (47, 7, 30, '2022-05-19 16:00:33', '2022-05-19 16:00:33');
-INSERT INTO `t_seat` VALUES (48, 8, 3, '2022-05-20 07:22:53', '2022-05-20 07:22:53');
-INSERT INTO `t_seat` VALUES (49, 8, 7, '2022-05-20 07:22:53', '2022-05-20 07:22:53');
-INSERT INTO `t_seat` VALUES (50, 8, 19, '2022-05-20 07:22:53', '2022-05-20 07:22:53');
-INSERT INTO `t_seat` VALUES (53, 10, 4, '2022-05-21 10:35:13', '2022-05-21 10:35:13');
+INSERT INTO `t_seat` VALUES (73, 7, 2, '2022-05-24 15:32:30', '2022-05-24 15:32:30');
+INSERT INTO `t_seat` VALUES (74, 7, 3, '2022-05-24 15:32:30', '2022-05-24 15:32:30');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -330,14 +316,14 @@ CREATE TABLE `t_user`  (
   `error_num` int(11) NULL DEFAULT 0,
   `status` int(255) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.1 用户表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.1 用户表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES (1, 'lapkin007', '8789614D47E9919D8E34AD34FAB6BC00', 'IHyusPWRWf', 5, '/images123/monv.jpg', 'Ice龟', '1659771776@qq.com', NULL, NULL, NULL, NULL, NULL, 0, 0);
-INSERT INTO `t_user` VALUES (2, 'lisi123', '5F781C20347E78C98A1EA1F15DB471F1', 'RnGNHsjUUq', 8, '/images123/monv3.jpg', 'LISI', '1659771776@qq.com', NULL, NULL, NULL, NULL, NULL, 0, 0);
-INSERT INTO `t_user` VALUES (3, 'test123', '21230BE4E1533B3425DE74DE678089AA', 'psTUVzCMmT', 1, '/images123/Shimizu8d800052-0163-48ca-b7a6-cb64ddbf9744.jpeg', 'iceiceice', '1659771776@qq.com', '2017-04-30 16:00:00', '男', 'wwwwwwwwwww', NULL, NULL, 0, 0);
+INSERT INTO `t_user` VALUES (1, 'lapkin007', '8789614D47E9919D8E34AD34FAB6BC00', 'IHyusPWRWf', 5, '/images123/monv.jpg', 'Ice龟', '1659771776@qq.com', NULL, NULL, NULL, '2022-05-23 14:06:23', NULL, 0, 0);
+INSERT INTO `t_user` VALUES (2, 'lisi123', '5F781C20347E78C98A1EA1F15DB471F1', 'RnGNHsjUUq', 8, '/images123/ShimizuUSERdfbb2c22-3b7d-4c6f-a045-45eb121cd350.jpeg', 'LISI', '1659771776@qq.com', NULL, NULL, NULL, '2022-05-23 14:06:26', NULL, 0, 0);
+INSERT INTO `t_user` VALUES (4, 'Linjun123', 'E83B15209A373B5CBD17D181E64A3181', 'TwAJYiXdlN', 6, '/images123/monakaUSERb75ca836-7486-4673-8ae7-28b30d00a367.png', 'iceiceice', '1659771776@qq.com', '2022-05-08 16:00:00', '男', '测试测试', NULL, NULL, 0, 0);
 
 -- ----------------------------
 -- Table structure for t_worker
@@ -356,13 +342,14 @@ CREATE TABLE `t_worker`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间（格式2022-01-14\\n11:37:03）',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间（格式2022-01-14\\n11:37:03）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.3 客服表（t_worker）' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.3 客服表（t_worker）' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_worker
 -- ----------------------------
-INSERT INTO `t_worker` VALUES (6, 'Lemon', '123456', 'https://s1.ax1x.com/2022/04/01/qhEQhQ.jpg', 'Lemon', '12391821823', 'true', '男', '客服部', '2022-05-17 09:07:11', '2022-05-17 09:07:14');
-INSERT INTO `t_worker` VALUES (7, 'Shixinyu', '123456', 'https://s1.ax1x.com/2022/04/01/qhE31s.jpg', '新语', '13847639183', 'true', '女', '客服部', '2022-05-17 09:09:07', '2022-05-17 09:09:10');
+INSERT INTO `t_worker` VALUES (6, 'Lemon', '123456', '/images123/turtle2USER170df8a4-0265-4a46-9364-2ca5b030cc95.jpg', '大大柠檬', '12391821823', 'true', '男', '客服部', '2022-05-17 09:07:11', '2022-05-17 09:07:14');
+INSERT INTO `t_worker` VALUES (7, 'Shixinyu', '123456', '/images123/shinobu.jpg', '新语', '13847639183', 'true', '女', '客服部', '2022-05-17 09:09:07', '2022-05-17 09:09:10');
+INSERT INTO `t_worker` VALUES (8, 'kefu123', '123456', '/images123/wa21USER90aa274d-9065-4063-9dd1-b9f43c6f0a9e.png', '冰', '13075918709', 'true', '男', '运营部', '2022-05-23 15:07:49', '2022-05-23 15:07:49');
 
 -- ----------------------------
 -- Table structure for t_worker_evaluate
@@ -377,7 +364,7 @@ CREATE TABLE `t_worker_evaluate`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '添加时间（格式2022-01-14\\n11:37:03）',
   `update_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.7 客服评价表（t_worker_evaluate）' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '4.2.7 客服评价表（t_worker_evaluate）' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_worker_evaluate

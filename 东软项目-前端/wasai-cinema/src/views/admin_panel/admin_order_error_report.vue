@@ -68,7 +68,7 @@
 
 <script>
 import { QueryAdminAccount,QueryAdminInfo } from "@/api/admin";
-import { QueryAllorder ,CancleOneOrder,PostOeOrder,GetAlloe} from "@/api/order";//引入订单接口
+import { QueryAllorder ,CancleOneOrder,PostOeOrder,GetAlloe,PostOe} from "@/api/order";//引入订单接口
 import { parseTime } from "@/plugins/DateTran";//日期格式转化
 import { Admin_Login_JS } from "@/plugins/AdminLogin";
 export default {
@@ -79,8 +79,6 @@ export default {
        formLabelWidth: '90px',
        dialogSolveVisible: false,
         form: {
-          name: '',
-          reason:'',
           statue:'',
           result:'',
         },
@@ -142,13 +140,41 @@ export default {
       this.form_index=index;
     },
     Operation_SolveOrder_confirm:function(index){
-        if(this.form.statue=="处理成功")
-      {this.testlist[index].statue="处理成功";
-      this.testlist[index].solve_statue=true;}
+       if(this.form.statue=="等待处理"){var sta=0}
+        if(this.form.statue=="处理成功"){var sta=1}
+       const vo={
+          id:this.Oe_list[this.form_index].id,
+          result:this.form.result,
+          status:sta,
+       }
+       //处理异常接口
+       PostOe(vo).then((res)=>{
+         if(res.code==200){
+         if(res.data.success=="success")
+         {
+           this.$message({message:res.data.msg,type:res.data.success});
+           if(vo.status==1)
+           {this.Oe_list[this.form_index].status="处理成功";}
+           if(vo.status==0)
+           {this.Oe_list[this.form_index].status="等待处理";}
+         }
+         else{
+           this.$message.error("处理异常失败")
+         }
+         }
+         else{
+           this.$message.error("请求处理失败,请检查网络")
+         }
+         }
+       )
+       console.log(vo);
+      if(this.form.statue=="处理成功")
+      {this.Oe_list[index].statue="处理成功";
+      this.Oe_list[index].solve_statue=true;}
         else{
             this.testlist[index].statue="等待处理";
         }
-        this.testlist[index].solve_result=this.form.result;
+        
         this.dialogSolveVisible = false;
     },
     changePad:function(n){
@@ -156,7 +182,7 @@ export default {
         this.activeNames.push(n);
       }
        else{
-         this.activeNames.pop(n);
+         this.activeNames.splice(this.activeNames.indexOf(n),1);
        }
     }
   },

@@ -44,5 +44,7 @@ public interface OrderService{
 	public int updateByPrimaryKeySelective( Order record );
 	//修改（根据主键ID修改）
 	public int updateByPrimaryKey ( Order record );
+	//根据AID修改
+	public int updateByAidSelective(Order record);
 
 }

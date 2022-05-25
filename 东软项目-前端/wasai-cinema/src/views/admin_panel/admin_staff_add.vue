@@ -5,9 +5,16 @@
       <div><div class="inputLabel"><span style="color:red">*</span>密码</div><el-input placeholder="请输入密码" class="inputBox" v-model=" StaffForm.staff_pwd"></el-input></div>
       <div><div class="inputLabel"><span style="color:red">*</span>昵称</div><el-input placeholder="请输入昵称" class="inputBox" v-model=" StaffForm.staff_nickname"></el-input></div>
       <!-- 性别选框 -->
-      <div><div class="inputLabel" style="margin-right:10px"><span style="color:red">*</span>性别</div>
+      <div>
+        <div class="inputLabel" style="margin-right:10px"><span style="color:red">*</span>性别</div>
        <el-radio v-model="StaffForm.staff_sex" label="男">男</el-radio>
        <el-radio v-model="StaffForm.staff_sex" label="女">女</el-radio>
+      </div>
+      <!-- 启用选框 -->
+      <div>
+        <div class="inputLabel" style="margin-right:10px"><span style="color:red">*</span>是否启用</div>
+       <el-radio v-model="StaffForm.entry" label="false">禁用</el-radio>
+       <el-radio v-model="StaffForm.entry" label="true">启用</el-radio>
       </div>
       <div><div class="inputLabel"><span style="color:red">*</span>电话号码</div><el-input placeholder="请输入电话" class="inputBox" v-model=" StaffForm.staff_phone"></el-input></div>
       <!-- 部门选框 -->
@@ -16,13 +23,6 @@
        <el-radio v-model="StaffForm.staff_dept" label="运营部">运营部</el-radio><el-radio v-model="StaffForm.staff_dept" label="策划部">策划部</el-radio>
        <el-radio v-model="StaffForm.staff_dept" label="人事部">人事部</el-radio><el-radio v-model="StaffForm.staff_dept" label="监督部">监督部</el-radio>
       </div>
-      <div><div class="inputLabel"><span style="color:red">*</span>头像</div>
-      <el-upload
-       class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple style="margin-left:90px">
-      <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-        <div class="el-upload__tip" slot="tip">只能上传jpg/png文件,且不超过500kb</div>
-</el-upload></div>
       <!-- 按钮 -->
       <el-form-item>
     <el-button type="primary" @click="onSubmit" class="SubmitBTN">立即创建</el-button>
@@ -34,24 +34,63 @@
 </template>
 
 <script>
+import { workerAdd } from "@/api/worker";
 export default {
   data(){
     return{
       StaffForm:{
-          staff_name:'',
-          staff_pwd:'',
-          staff_nickname:'',
+          staff_name:null,
+          staff_pwd:null,
+          staff_nickname:null,
           staff_sex:'男',
-          staff_phone:'',
-          staff_dept:'',
-          staff_img:'',
+          staff_phone:null,
+          staff_dept:"客服部",
+          entry:"false",
       }
         
     }
   },
   methods:{
+    //确认添加员工
     onSubmit() {
-        console.log('submit!');
+        if(this.StaffForm.staff_name==null||this.StaffForm.staff_pwd==null||this.StaffForm.staff_nickname==null||this.StaffForm.staff_phone==null)
+        {
+          this.$message.error("请填写用户名,密码,昵称,和电话")
+        }
+        else{
+          if(this.StaffForm.staff_name==""||this.StaffForm.staff_pwd==""||this.StaffForm.staff_nickname==""||this.StaffForm.staff_phone=="")
+        {
+          this.$message.error("检测到空白数据")
+        }
+        else{
+          const vo={
+            username:this.StaffForm.staff_name,
+            password:this.StaffForm.staff_pwd,
+            phone:this.StaffForm.staff_phone,
+            department:this.StaffForm.staff_dept,
+            entry:this.StaffForm.entry,
+            gender:this.StaffForm.staff_sex,
+            nickname:this.StaffForm.staff_nickname,
+          }
+          workerAdd(vo).then((res)=>{
+            if(res.code==200)
+        {
+          if(res.data.success=="success")
+          {
+            this.$message({message:"添加成功",type:res.data.success})
+          }
+          else{
+            this.$message.error("添加失败,请重试并查看字符")
+          }
+        }
+        else{
+          this.$message.error("请求失败")
+        }
+          })
+
+        }
+
+        }
       }
     }
 }
@@ -60,7 +99,7 @@ export default {
 <style scoped>
 .outbox{
   overflow: auto;
-  background-color: aqua;
+  background-color: rgb(204, 207, 207);
   height:760px;
   padding-left:50px;
   padding-top:50px;

@@ -53,3 +53,11 @@ export function GetAlloe(){
         method:'get',
     })
 }
+
+export function PostOe(vo){
+    return service({
+        url:'/api/oe',
+        method:'put',
+        data:vo,
+    })
+}

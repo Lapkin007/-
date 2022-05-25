@@ -5,7 +5,7 @@ const config={
     //本地实际后端
      API_URL:"http://localhost:8081"
     //远程服务器后端
-   // API_URL:"http://47.115.220.25:8081"
+    //API_URL:"http://47.115.220.25:8081"
 };
 
 export default config

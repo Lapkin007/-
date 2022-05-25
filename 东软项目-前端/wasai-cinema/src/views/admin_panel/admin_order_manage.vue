@@ -24,8 +24,8 @@
     <template slot="title">
     <el-row style="background-color:white;width: 1800px;height: 48px;">
          <el-col :span="7" class="order-box-item1">{{item.order.id}}</el-col>
-         <el-col :span="5" class="order-box-item1">{{item.order.price}}</el-col>
-         <el-col :span="3" class="order-box-item2"><div :class="changeOrderCss(item)">{{item.order.status}}</div></el-col>
+         <el-col :span="4" class="order-box-item1">{{item.order.price}}</el-col>
+         <el-col :span="4" class="order-box-item2"><div :class="changeOrderCss(item)">{{item.order.status}}</div></el-col>
          <el-col :span="6" class="order-box-item3">
            <el-button class="wait1" @click="Operation_CancleOrder(index)">撤销订单</el-button>
            <el-button class="fail1" @click="Operation_FailOrder(index)">上报异常</el-button>
@@ -273,7 +273,7 @@ export default {
         this.activeNames.push(n);
       }
        else{
-         this.activeNames.pop(n);
+         this.activeNames.splice(this.activeNames.indexOf(n),1);
        }
     }
   },

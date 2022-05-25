@@ -59,3 +59,19 @@ export function ModifySelf(data) { //id自动
 				data:data
     })
 }
+//查询所有的用户信息
+export function SelectAllUser() { //id自动
+    return service({
+        url: '/api/user',
+        method: 'get',
+    })
+}
+
+//删除一个用户
+export function DeleteUser(id) { 
+    return service({
+        url: '/api/user/'+id,
+        method: 'delete',
+        
+    })
+}

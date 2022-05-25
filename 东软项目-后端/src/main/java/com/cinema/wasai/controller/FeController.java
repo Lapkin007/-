@@ -5,6 +5,7 @@ import com.cinema.wasai.config.MyConstants;
 import com.cinema.wasai.model.entiy.FilmEvaluate;
 import com.cinema.wasai.model.entiy.LeavingMessage;
 import com.cinema.wasai.model.entiy.User;
+import com.cinema.wasai.model.support.ResponseResult;
 import com.cinema.wasai.model.vo.FilmEvaVo;
 import com.cinema.wasai.model.vo.LeaveMsgVo;
 import com.cinema.wasai.service.FilmEvaluateService;
@@ -41,6 +42,19 @@ public class FeController {
         return FilmFeList;
 
     }
+//@GetMapping("/{fid}")
+//public ResponseResult getCommentByFid(@PathVariable int fid){
+//    log.info("FilmController->getAllFilm()");
+//    //把电影列表放进FilmFeList里
+//    List<FilmEvaluate> FilmFeList= filmEvaluateService.selectByFid(fid);
+//    //循环的同时把User数据塞进去
+//    for(int i=0;i<FilmFeList.size();i++){
+//        User user=userService.selectByPrimaryKey(FilmFeList.get(i).getUid());
+//        user.setAvatar(MyConstants.MY_URL+user.getAvatar());
+//        FilmFeList.get(i).setUser(user);
+//    }
+//    return new ResponseResult(MyConstants.MY_URL + FilmFeList.get(0).getUser().getAvatar());
+//}
     @PostMapping("")
     public Map<String,Object> AddFilmEva(@RequestBody FilmEvaVo vo){
         log.info("WorkerEvaluateController------------>AddFilmEva(@RequestBody LoginVo vo)");

@@ -113,6 +113,34 @@ const routes = [
       path:"staff_add",
       component:()=>import("@/views/admin_panel/admin_staff_add")
       },
+      {
+        path:"user_manage",
+        component:()=>import("@/views/admin_panel/admin_user_manage")
+      },
+      {
+        path:"staff_manage",
+        component:()=>import("@/views/admin_panel/admin_staff_manage")
+      },
+      {
+        path:"film_add",
+        component:()=>import("@/views/admin_panel/admin_film_add")
+      },
+      {
+        path:"film_manage",
+        component:()=>import("@/views/admin_panel/admin_film_manage")
+      },
+      {
+        path:"arr_add",
+        component:()=>import("@/views/admin_panel/admin_arr_add")
+      },
+      {
+        path:"arr_manage",
+        component:()=>import("@/views/admin_panel/admin_arr_manage")
+      },
+      {
+        path:"poster_manage",
+        component:()=>import("@/views/admin_panel/admin_poster_manage")
+      },
     ]
   },
 ]

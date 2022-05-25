@@ -1,5 +1,6 @@
 package com.cinema.wasai.controller;
 
+import com.cinema.wasai.config.MyConstants;
 import com.cinema.wasai.model.entiy.Admin;
 import com.cinema.wasai.model.entiy.FilmEvaluate;
 import com.cinema.wasai.model.vo.AdminVo;
@@ -49,6 +50,7 @@ public class AdminController {
         log.info("AdminController------------>getAdminById(@PathVariable int id)");
         Map<String,Object> map=new HashMap<>();
         Admin admin=adminService.selectByPrimaryKey(id);
+        admin.setAvatar(MyConstants.MY_URL+admin.getAvatar());
         map.put("admin",admin);
         return map;
     }

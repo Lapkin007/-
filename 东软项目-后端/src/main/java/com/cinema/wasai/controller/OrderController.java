@@ -1,5 +1,6 @@
 package com.cinema.wasai.controller;
 
+import com.cinema.wasai.config.MyConstants;
 import com.cinema.wasai.model.entiy.*;
 import com.cinema.wasai.model.vo.FilmEvaVo;
 import com.cinema.wasai.service.*;
@@ -34,6 +35,7 @@ public class OrderController {
         for(int i=0;i<order.size();i++) {
             Arrangement arr = arrangementService.selectByPrimaryKey(order.get(i).getAid());
             Film film = filmService.selectByPrimaryKey(arr.getFid());
+            film.setCover(MyConstants.MY_URL+film.getCover());
             User user=userService.selectByPrimaryKey(uid);
             //把前面取到的全部放入MyCart类
             MyOrder myOrder=new MyOrder();
@@ -102,7 +104,7 @@ public class OrderController {
         map.put("success","fail");
         return map;
     }
-    //查询所有的订单信息
+    //查询所有的订单信息(管理端)
     @GetMapping("")
     public List<MyOrder> GetAllOrder() {
         List<MyOrder> map_out=new ArrayList<>();

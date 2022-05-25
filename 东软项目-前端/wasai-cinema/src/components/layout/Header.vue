@@ -277,8 +277,8 @@ data(){
     position:absolute;
     width:200px ;
     height:200px;
-    left: 77.5%;
-    top:8.2%;
+    left: 1500px;
+    top:70px;
     list-style-type: none;
     margin: 0;
     padding: 0;

@@ -23,11 +23,12 @@
 		<result column="create_time" property="createTime"/>
 		<result column="update_time" property="updateTime"/>
 	</resultMap>
-	<!-- 查询热门榜单 -->
+	<!-- 查询热门榜单,上架的 -->
 	<select id="selectAllHotRanks" resultMap="baseMap">
 		SELECT
 		<include refid="Base_Column_List" />
 		FROM t_film
+		where status=1
         order by hot desc limit #{hot}
 	</select>
 	<!-- 查询（根据主键ID查询） -->

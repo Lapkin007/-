@@ -1,16 +1,14 @@
 package com.cinema.wasai.controller;
 
 import com.cinema.wasai.model.entiy.*;
+import com.cinema.wasai.model.vo.HandleOeVo;
 import com.cinema.wasai.model.vo.OrderExceptionVo;
 import com.cinema.wasai.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/oe")
@@ -31,6 +29,7 @@ public class OrderExceptionController {
     OrderService orderService;
     @Autowired
     OrderExceptionService orderExceptionService;
+    //提交异常订单
     @PostMapping("")
     public Integer PostOe(@RequestBody OrderExceptionVo vo){
         //把查询到的订单放入order
@@ -48,10 +47,33 @@ public class OrderExceptionController {
         int value=orderExceptionService.insert(oe);
         return value;
     }
+    //获得所有异常订单
     @GetMapping("")
     public List<OrderException> GetAllOe(){
         log.info("OrderExceptionController->OrderExceptionVo");
         List<OrderException> oelist=orderExceptionService.selectAllOrderExceptions();
         return oelist;
     }
+    //处理异常订单
+    @PutMapping("")
+        public Map<String,Object> HandleOE(@RequestBody HandleOeVo vo)
+    {
+        Map<String,Object> map=new HashMap<>();
+        //创建一个异常类的对象，按主键来更新其中的信息
+        OrderException oe=new OrderException();
+        oe.setId(vo.getId());
+        oe.setStatus(vo.getStatus());
+        oe.setResult(vo.getResult());
+        int value=orderExceptionService.updateByPrimaryKeySelective(oe);
+        if(value==1)
+        {
+            map.put("msg","处理成功");
+            map.put("success","success");
+        }else{
+            map.put("msg","处理失败");
+            map.put("success","fail");
+        }
+        return map;
+    }
+
 }

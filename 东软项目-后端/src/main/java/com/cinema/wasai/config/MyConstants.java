@@ -11,8 +11,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 public class MyConstants extends WebMvcConfigurationSupport {
     // 拦截器
     // swagger
-     //public static  final  String MY_URL="http://47.115.220.25:8081";
     public static  final  String MY_URL="http://localhost:8081";
+    //public static  final  String MY_URL="http://47.115.220.25:8081";
     @Value("${zsp.poster.upload}")
     private String uploadPath; //获得application.properties配置的本地路径
 

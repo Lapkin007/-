@@ -19,10 +19,11 @@
           <span>影视管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="1-1">电影列表</el-menu-item>
-          <el-menu-item index="1-2">院线排片</el-menu-item>
-          <el-menu-item index="1-3">新增电影</el-menu-item>
-          <el-menu-item index="1-4">轮播海报</el-menu-item>
+          <el-menu-item index="1-1" @click="HandleClickFilmManage()">电影列表</el-menu-item>
+          <el-menu-item index="1-2" @click="HandleClickFilmAdd()">新增电影</el-menu-item>
+          <el-menu-item index="1-3" @click="HandleClickArrManage()">排片管理</el-menu-item>
+          <el-menu-item index="1-4" @click="HandleClickArrAdd()">增加排片</el-menu-item>
+          <el-menu-item index="1-5" @click="HandleClickPosterManage()">轮播海报</el-menu-item>
         </el-menu-item-group>
         </el-submenu>
       <el-submenu index="2">
@@ -30,7 +31,7 @@
         <i class="el-icon-menu" style="color:white"></i>
         <span slot="title">用户管理</span>
           </template>
-          <el-menu-item index="2-1">用户列表</el-menu-item>
+          <el-menu-item index="2-1" @click="HandleClickUserManage()">用户列表</el-menu-item>
       </el-submenu>
       <el-submenu index="3">
           <template slot="title">
@@ -45,7 +46,7 @@
         <i class="el-icon-menu" style="color:white"></i>
         <span slot="title">员工管理</span>
           </template>
-          <el-menu-item index="4-1">员工列表</el-menu-item>
+          <el-menu-item index="4-1" @click="HandleClickStaffManage()">员工列表</el-menu-item>
           <el-menu-item index="4-2" @click="HandleClickStaffAdd()">新增员工</el-menu-item>
       </el-submenu>
     </el-menu>
@@ -157,6 +158,28 @@ HandleClickStaffAdd(){
   window.location.href="#/admin_panel/staff_add";
   //this.$router.push("./admin_panel/order_error_report");//会出现连续点击跳转错误的问题
 },
+HandleClickUserManage(){
+  window.location.href="#/admin_panel/user_manage";
+  //this.$router.push("./admin_panel/order_error_report");//会出现连续点击跳转错误的问题
+},
+HandleClickStaffManage(){
+  window.location.href="#/admin_panel/staff_manage";
+},
+HandleClickFilmAdd(){
+  window.location.href="#/admin_panel/film_add";
+},
+HandleClickFilmManage(){
+  window.location.href="#/admin_panel/film_manage";
+},
+HandleClickArrAdd(){
+  window.location.href="#/admin_panel/arr_add";
+},
+HandleClickArrManage(){
+  window.location.href="#/admin_panel/arr_manage";
+},
+HandleClickPosterManage(){
+  window.location.href="#/admin_panel/poster_manage";
+}
 
     },
     created:function(){

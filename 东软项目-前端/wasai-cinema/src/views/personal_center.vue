@@ -162,7 +162,7 @@
       <div class="picture">
       <div><el-upload
 						class="avatar-uploader"
-            action="http://localhost:8081/api/user/upload"
+            action="http://47.115.220.25:8081/api/user/upload"
 						:show-file-list="false"
 						:on-success="handleAvatarSuccess"
 						:before-upload="beforeAvatarUpload">
@@ -188,27 +188,27 @@ export default {
      data(){
        return{
          //个人设置信息单
-        imageUrl:'',
+        imageUrl:null,
         dynamicValidateForm:{
         domains: [
           {
-            value: "",
+            value: null,
           },
         ],
-        email: "", //邮箱
+        email: null, //邮箱
       },
-      ruleForm: { pass: "" }, //密码
+      ruleForm: { pass: null }, //密码
       form: {
-        name: "", //昵称
-        region: "",
-        date1: "",//生日
-        date2: "",
+        name: null, //昵称
+        region:null,
+        date1: null,//生日
+        date2: null,
         delivery: false,
         type: [],
-        sex: "",// 性别
-        desc: "", //个人介绍
+        sex: null,// 性别
+        desc: null, //个人介绍
       },
-			fileName:'',
+			fileName:null,
 
          //暂存信息
          item:{},
@@ -253,15 +253,16 @@ export default {
        //个人信息
        beforeAvatarUpload(file) {
 			const isJPG = file.type === 'image/jpeg';
-			const isLt2M = file.size / 1024 / 1024 < 2;
+      const isPNG = file.type === 'image/png';
+			const isLt2M = file.size / 2048 / 2048 < 2;
 
-			if (!isJPG) {
-				this.$message.error('上传头像图片只能是 JPG 格式!');
+			if (!isJPG&!isPNG) {
+				this.$message.error('上传头像图片只能是 JPG 或者 PNG 格式!');
 			}
 			if (!isLt2M) {
-				this.$message.error('上传头像图片大小不能超过 2MB!');
+				this.$message.error('上传头像图片大小不能超过 8MB!');
 			}
-			return isJPG && isLt2M;
+			return isPNG&isJPG && isLt2M;
 		},
 		handleAvatarSuccess(res, file) {
 			console.log(res.data.fileName);
@@ -281,8 +282,11 @@ export default {
 				id:localStorage.getItem("uid"),
 			};
 			console.log(data);
-			
-			ModifySelf(data).then((res)=>{
+			  if(this.ruleForm.pass!=null)
+        { if(data.password.length<6)
+        {this.$message.error("请输入6位以上的密码")}
+        else{
+          ModifySelf(data).then((res)=>{
 				if(res.code==200)
         {
           if(res.data.success=="success")
@@ -298,6 +302,29 @@ export default {
           this.$message.error("请求失败")
         }
 			});
+        }
+          }
+        else{
+          ModifySelf(data).then((res)=>{
+				if(res.code==200)
+        {
+          if(res.data.success=="success")
+          {
+            this.$message({message:res.data.msg,type:res.data.success})
+            window.location.reload();
+          }
+          else{
+            this.$message.error("更新失败")
+          }
+        }
+        else{
+          this.$message.error("请求失败")
+        }
+			});
+        }
+        
+        
+      
     },
        //删除弹框方法
        ClickDelete(item,index)
@@ -413,6 +440,14 @@ export default {
       },
        // 按下选中按钮的方法
       handleCheckedCitiesChange(value) {
+        //重新排序的方法
+        // var compare=function(x,y){
+        //   if(x<y){return -1}
+        //   else if(x>y){return 1}
+        //   else{return 0}
+        // }
+        // this.selectItem=this.selectItem.sort(compare);
+        // console.log(this.selectItem);
         let checkedCount = value.length;
         this.checkAll = checkedCount === this.selectItem.length;
         this.isIndeterminate = checkedCount > 0 && checkedCount < this.selectItem.length;

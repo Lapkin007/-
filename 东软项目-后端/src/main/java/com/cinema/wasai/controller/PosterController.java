@@ -2,6 +2,7 @@ package com.cinema.wasai.controller;
 
 import com.cinema.wasai.config.MyConstants;
 import com.cinema.wasai.model.entiy.Poster;
+import com.cinema.wasai.model.entiy.Worker;
 import com.cinema.wasai.service.PosterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class PosterController {
 
     @Autowired
     PosterService posterService;
+    //获得所有可用的轮播图
     @GetMapping("")
     public List<Poster> getAllPoster(){
         log.info("PosterController->");
@@ -42,8 +44,7 @@ public class PosterController {
     @PostMapping("/upload")
     public Map<String,String> uploadPoster(
             @RequestParam(name="title",defaultValue = "电影标题")String title,
-            @RequestParam(name="fid",defaultValue = "1")int fid
-            , MultipartFile file){
+            @RequestParam(name="fid",defaultValue = "1")int fid , MultipartFile file){
         log.info("PosterController-> uploadPoster() ");
         Map<String,String> map = new HashMap<>();
         //保存到文件中
@@ -75,6 +76,53 @@ public class PosterController {
         } catch (IOException e) {
             e.printStackTrace();//文件上传失败
             map.put("message","文件保存失败");
+        }
+        return map;
+    }
+    //获得所有轮播图，管理端
+    @GetMapping("/all")
+    public List<Poster> getAllPoster2(){
+        log.info("PosterController->");
+        List<Poster> allPoster= posterService.selectAllPosters();
+        for(Poster poster:allPoster)
+        {
+            poster.setUrl(MyConstants.MY_URL+poster.getUrl());
+        }
+        return allPoster;
+        //在线版本
+        //return posterService.getAllPoster();
+    }
+    @DeleteMapping("/{id}")
+    public Map<String,Object> DeleteOneWorker(@PathVariable Integer id)
+    {
+        Map<String,Object> map=new HashMap<>();
+        int value=posterService.deleteByPrimaryKey(id);
+        if(value==1)
+        {
+            map.put("msg","删除成功");
+            map.put("success","success");
+        }else{
+
+            map.put("msg","删除失败");
+            map.put("success","fail");
+        }
+        return map;
+    }
+    @PostMapping("/modify")
+    public Map<String,Object> modify(@RequestBody Poster vo) {
+        log.info("posterController---------------->modify()");
+        //查询（通过Id查询当前用户）
+        //修改
+        int value=posterService.updateByPrimaryKeySelective(vo);//通过主键修改其他非空的字段
+        Map<String,Object> map = new HashMap<>();
+        if(value==1)
+        {map.put("token","oook");
+            map.put("msg","更新成功");
+            map.put("success","success");
+        }else{
+            map.put("token","nook");
+            map.put("msg","更新失败");
+            map.put("success","fail");
         }
         return map;
     }
